@@ -41,6 +41,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "sentry_sdk.integrations.django.middleware.SentryTraceMiddleware",
 ]
 
 ROOT_URLCONF = '{{cookiecutter.project_slug}}.urls'
@@ -102,3 +103,4 @@ from .config.jwt import *
 from .config.rest_framework import *
 from .config.statics_media import *
 from .config.localization import *
+from .config.sentry_sdk import *
