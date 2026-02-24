@@ -1,4 +1,4 @@
-FROM python:3.10.12-slim
+FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -7,6 +7,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     bash \
+    build-essential \
+    libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
 SHELL ["/bin/bash", "-c"]
@@ -21,7 +23,9 @@ USER django_user
 COPY --chown=django_user:django_user requirements.txt .
 
 RUN python -m pip install --upgrade pip \
- && python -m pip install --no-cache-dir -r requirements.txt gunicorn
+ && python -m pip install -r requirements.txt gunicorn \
+    --index-url https://mirror-pypi.codinto.ir/root/pypi/+simple/ \
+    --trusted-host mirror-pypi.codinto.ir
 
 COPY --chown=django_user:django_user . .
 
